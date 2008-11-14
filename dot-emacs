@@ -1,0 +1,116 @@
+(server-start)
+
+;; Sets coding system priority and default input method
+(set-language-environment 'German)
+
+;; space for tabs
+(setq-default indent-tabs-mode nil)
+
+;; mouse wheel
+(autoload 'mwheel-install "mwheel" "Enable mouse wheel support.") (mwheel-install)
+
+;; swbuff-y
+(load-library "swbuff-y")
+
+;; subversion backend for vc
+(add-to-list 'vc-handled-backends 'SVN)
+
+;; python-mode
+(setq auto-mode-alist (cons '("\\.py$" . python-mode) auto-mode-alist))
+(setq interpreter-mode-alist (cons '("python" . python-mode)
+				   interpreter-mode-alist))
+(autoload 'python-mode "python-mode" "Python editing mode." t)
+
+(eval-after-load "pymacs"
+  '(add-to-list 'pymacs-load-path
+                "/usr/local/share/emacs/site-lisp/python-mode-1.0"))
+(require 'pycomplete)
+
+;; rope refactoring
+(pymacs-load "ropemacs" "rope-")
+
+
+;; flymake with pyflakes
+;; (when (load "flymake" t)
+;;        (defun flymake-pyflakes-init ()
+;;          (let* ((temp-file (flymake-init-create-temp-buffer-copy
+;;                             'flymake-create-temp-inplace))
+;;             (local-file (file-relative-name
+;;                          temp-file
+;;                          (file-name-directory buffer-file-name))))
+;;            (list "pyflakes" (list local-file))))
+
+;;        (add-to-list 'flymake-allowed-file-name-masks
+;;                 '("\\.py\\'" flymake-pyflakes-init)))
+
+;;  (add-hook 'find-file-hook 'flymake-find-file-hook)
+
+
+;; flymake with pylint
+(when (load "flymake" t)
+  (defun flymake-pylint-init ()
+    (let* ((temp-file (flymake-init-create-temp-buffer-copy
+                       'flymake-create-temp-inplace))
+       (local-file (file-relative-name
+                    temp-file
+                    (file-name-directory buffer-file-name))))
+      (list "epylint" (list local-file))))
+
+  (add-to-list 'flymake-allowed-file-name-masks
+           '("\\.py\\'" flymake-pylint-init)))
+
+
+;; ipython
+;; If you happen to get garbage instead of colored prompts as described
+;; in the previous section, you may need to set also in your .emacs file:
+(setq ansi-color-for-comint-mode t) 
+
+(require 'ipython)
+
+;; bicycle repair
+(pymacs-load "bikeemacs" "brm-")
+(brm-init)
+
+;; pylint
+; (load-library "pylint")
+
+;; mmm-mode
+(setq mmm-global-mode 'maybe)
+
+;; kid-nxml-mode
+;; (mmm-add-mode-ext-class nil "\\.kid?\\'" 'html-kid)
+;; (mmm-add-mode-ext-class nil "\\.kid?\\'" 'html-css)
+;; (mmm-add-classes
+;;  '((html-kid
+;;     :submode python-mode
+;;     :front "<\\?python"
+;;     :back "?>")
+;;    (html-css
+;;     :submode css-mode
+;;     :front "type=\"text/css\">"
+;;     :back "</style>")))
+(add-to-list 'auto-mode-alist '("\\.kid?\\'" . nxml-mode))
+
+;;;   rst.el -- ReStructuredText Support for Emacs
+;; (require 'rst)
+;; (add-hook 'text-mode-hook 'rst-text-mode-bindings)
+
+
+;;;;;;;;;;;;
+;;; Key defs
+;;;;;;;;;;;;
+
+;F1: goto-line
+(define-key global-map [f1] 'goto-line)
+
+;F1: cvs-examine
+(define-key global-map [f2] 'cvs-examine)
+
+(custom-set-variables
+  ;; custom-set-variables was added by Custom -- don't edit or cut/paste it!
+  ;; Your init file should contain only one such instance.
+ '(global-font-lock-mode t nil (font-lock)))
+(custom-set-faces
+  ;; custom-set-faces was added by Custom -- don't edit or cut/paste it!
+  ;; Your init file should contain only one such instance.
+ )
