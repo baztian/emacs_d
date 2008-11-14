@@ -1,3 +1,11 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;Library Paths
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(add-to-list 'load-path "~/.emacs.d")
+(progn (cd "~/.emacs.d") (normal-top-level-add-subdirs-to-load-path))
+(when (file-exists-p "/usr/share/emacs/site-lisp/site-gentoo.el")
+  (load "/usr/share/emacs/site-lisp/site-gentoo"))
+
 (server-start)
 
 ;; Sets coding system priority and default input method
@@ -8,6 +16,13 @@
 
 ;; mouse wheel
 (autoload 'mwheel-install "mwheel" "Enable mouse wheel support.") (mwheel-install)
+
+(setq inhibit-startup-message t)
+
+;Show column numbers
+(column-number-mode 1)
+
+(tool-bar-mode -1)
 
 ;; swbuff-y
 (load-library "swbuff-y")
@@ -21,13 +36,24 @@
 				   interpreter-mode-alist))
 (autoload 'python-mode "python-mode" "Python editing mode." t)
 
+;; pymacs
+(autoload 'pymacs-apply "pymacs")
+(autoload 'pymacs-call "pymacs")
+(autoload 'pymacs-eval "pymacs" nil t)
+(autoload 'pymacs-exec "pymacs" nil t)
+(autoload 'pymacs-load "pymacs" nil t)
+;;(eval-after-load "pymacs"
+;;  '(add-to-list 'pymacs-load-path YOUR-PYMACS-DIRECTORY"))
+
 (eval-after-load "pymacs"
   '(add-to-list 'pymacs-load-path
-                "/usr/local/share/emacs/site-lisp/python-mode-1.0"))
+                "~/.emacs.d/python-mode-1.0"))
+
 (require 'pycomplete)
 
 ;; rope refactoring
 (pymacs-load "ropemacs" "rope-")
+(setq ropemacs-enable-autoimport t)
 
 
 ;; flymake with pyflakes
@@ -72,7 +98,11 @@
 (brm-init)
 
 ;; pylint
-; (load-library "pylint")
+(load-library "pylint")
+
+;;NXML mode
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(load-library "my-nxml")
 
 ;; mmm-mode
 (setq mmm-global-mode 'maybe)
