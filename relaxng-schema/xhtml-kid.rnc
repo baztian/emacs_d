@@ -1,0 +1,6 @@
+namespace py = "http://purl.org/kid/ns#"
+Kid.attrib = attribute py:* { text }*
+include "/usr/share/emacs/site-lisp/nxml-mode/schema/xhtml.rnc" {
+  Common.attrib = Core.attrib, I18n.attrib, Kid.attrib 
+  head.attlist &= Kid.attrib
+}
