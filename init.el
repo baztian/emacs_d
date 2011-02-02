@@ -37,7 +37,7 @@
 (add-to-list 'vc-handled-backends 'SVN)
 
 ;; dvc
-(load-file "~/.emacs.d/dvc/dvc-load.el")
+;; (load-file "~/.emacs.d/dvc/dvc-load.el")
 
 ;; python-mode
 (setq auto-mode-alist (cons '("\\.py$" . python-mode) auto-mode-alist))
@@ -46,7 +46,7 @@
 (autoload 'python-mode "python-mode" "Python editing mode." t)
 
 ;; pymacs
-(setenv "PYTHONPATH" "/home/bbowe/.emacs.d/Pymacs-0.23")
+(setenv "PYTHONPATH" (concat (getenv "HOME") "/.emacs.d/Pymacs-0.23"))
 (autoload 'pymacs-apply "pymacs")
 (autoload 'pymacs-call "pymacs")
 (autoload 'pymacs-eval "pymacs" nil t)
@@ -55,8 +55,8 @@
 (eval-after-load "pymacs"
   '(progn
      (add-to-list 'pymacs-load-path "~/.emacs.d/python-mode-1.0")
-     (add-to-list 'pymacs-load-path "~/.emacs.d/rope/ropemacs")
-     (add-to-list 'pymacs-load-path "~/.emacs.d/rope/rope")))
+     (add-to-list 'pymacs-load-path "~/.emacs.d/rope/ropemacs-0.6")
+     (add-to-list 'pymacs-load-path "~/.emacs.d/rope/rope-0.9.3")))
 
 
 (require 'pycomplete)
@@ -67,19 +67,32 @@
 
 
 ;; flymake with pyflakes
+;; (when (load "flymake" t)
+;;        (defun flymake-pyflakes-init ()
+;;          (let* ((temp-file (flymake-init-create-temp-buffer-copy
+;;                             'flymake-create-temp-inplace))
+;;             (local-file (file-relative-name
+;;                          temp-file
+;;                          (file-name-directory buffer-file-name))))
+;;            (list "pyflakes" (list local-file))))
+
+;;        (add-to-list 'flymake-allowed-file-name-masks
+;;                 '("\\.py\\'" flymake-pyflakes-init)))
+
+;;  (add-hook 'find-file-hook 'flymake-find-file-hook)
+
 (when (load "flymake" t)
-       (defun flymake-pyflakes-init ()
-         (let* ((temp-file (flymake-init-create-temp-buffer-copy
-                            'flymake-create-temp-inplace))
-            (local-file (file-relative-name
-                         temp-file
-                         (file-name-directory buffer-file-name))))
-           (list "pyflakes" (list local-file))))
+  (defun flymake-pylint-init (&optional trigger-type)
+    (let* ((temp-file (flymake-init-create-temp-buffer-copy
+		       'flymake-create-temp-inplace))
+	   (local-file (file-relative-name
+			temp-file
+			(file-name-directory buffer-file-name)))
+	   (options (when trigger-type (list "--trigger-type" trigger-type))))
+      (list "~/.emacs.d/flymake/pyflymake.py" (append options (list local-file)))))
 
-       (add-to-list 'flymake-allowed-file-name-masks
-                '("\\.py\\'" flymake-pyflakes-init)))
-
- (add-hook 'find-file-hook 'flymake-find-file-hook)
+  (add-to-list 'flymake-allowed-file-name-masks
+	       '("\\.py\\'" flymake-pylint-init)))
 
 
 ;; flymake with pylint
