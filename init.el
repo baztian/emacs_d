@@ -180,6 +180,13 @@
 ;; (require 'rst)
 ;; (add-hook 'text-mode-hook 'rst-text-mode-bindings)
 
+(defun tail-open (filename)
+  "Opens a file in auto-revert-tail-mode"
+  (interactive "fFilename: ")
+    (find-file filename)
+    (auto-revert-tail-mode)
+    (goto-char (point-max))
+    )
 
 ;;;;;;;;;;;;
 ;;; Key defs
@@ -191,8 +198,15 @@
 ;F2: cvs-examine
 (define-key global-map [f2] 'cvs-examine)
 
-;S-F1: cvs-examine
-;(define-key global-map [S-f1] 'find-file "hugo")
+;S-F1: open server.log
+(define-key global-map [S-f1]
+  (lambda()
+    (interactive)
+    (tail-open "d:/sandboxes/sb_si_rating/classes/log/serverlog.log")
+    ;; (find-file "d:/sandboxes/sb_si_rating/classes/log/serverlog.log")
+    ;; (auto-revert-tail-mode)
+    ;; (goto-char (point-max))
+    ))
 
 (custom-set-variables
   ;; custom-set-variables was added by Custom -- don't edit or cut/paste it!
