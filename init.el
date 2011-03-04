@@ -36,6 +36,11 @@
 ;; subversion backend for vc
 (add-to-list 'vc-handled-backends 'SVN)
 
+;; Disable vc-bzr
+;; Because of https://bugs.launchpad.net/bzr/+bug/673637
+(eval-after-load 'vc-bzr
+  (setq vc-handled-backends (delq 'Bzr vc-handled-backends)))
+
 ;; dvc
 ;; (load-file "~/.emacs.d/dvc/dvc-load.el")
 
@@ -70,10 +75,10 @@
 (defun tail-open (filename)
   "Opens a file in auto-revert-tail-mode"
   (interactive "fFilename: ")
-    (find-file filename)
-    (auto-revert-tail-mode)
-    (goto-char (point-max))
-    )
+  (find-file filename)
+  (auto-revert-tail-mode)
+  (goto-char (point-max))
+  )
 
 ;;;;;;;;;;;;
 ;;; Key defs
@@ -85,14 +90,43 @@
 ;F2: cvs-examine
 (define-key global-map [f2] 'cvs-examine)
 
-;S-F1: open server.log
-(define-key global-map [S-f1]
+(setq sandboxroot "d:/sandboxes/")
+(setq fiprjdir (concat sandboxroot "sb_si_rating/"))
+;C-S-f1 Toggle between project roots
+(define-key global-map [C-S-f1]
   (lambda()
     (interactive)
-    (tail-open "d:/sandboxes/sb_si_rating/classes/log/serverlog.log")
-    ;; (find-file "d:/sandboxes/sb_si_rating/classes/log/serverlog.log")
-    ;; (auto-revert-tail-mode)
-    ;; (goto-char (point-max))
+    (if (equal fiprjdir "sb_si_rating/")
+        (setq fiprjdir "sb_si_rating_ntueb/")
+        (setq fiprjdir "sb_si_rating/")
+    )
+    (message (concat "fiprjdir = " fiprjdir))
+))
+
+;C-F1: open serverlog.log
+(define-key global-map [C-f1]
+  (lambda()
+    (interactive)
+    (tail-open (concat sandboxroot fiprjdir "classes/log/serverlog.log"))
+    (rename-buffer (concat fiprjdir "serverlog.log"))
+    ;; (make-local-variable 'coding)
+    ;; (make-variable-buffer-local 'coding)
+    ;; (setq coding 'dos)
+    ;;(set-variable 'coding 'dos t)
+    (set-variable 'paragraph-start '"[RL][ci][RL]c\ " t)
+    ))
+
+;C-F2: open client.log
+(define-key global-map [C-f2]
+  (lambda()
+    (interactive)
+    (tail-open (concat sandboxroot fiprjdir "classes/log/client.log"))
+    (rename-buffer (concat fiprjdir "client.log"))
+    ;; (make-local-variable 'coding)
+    ;; (make-variable-buffer-local 'coding)
+    ;; (setq coding 'dos)
+    ;;(set-variable 'coding 'dos t)
+    (set-variable 'paragraph-start '"[0-9][0-9][0-9][0-9]-" t)
     ))
 
 (custom-set-variables
