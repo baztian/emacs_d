@@ -4,3 +4,4 @@
 **/*.log
 **/*.elc
 /server
+/ac-comphist.dat
