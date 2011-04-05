@@ -42,7 +42,7 @@
   (setq vc-handled-backends (delq 'Bzr vc-handled-backends)))
 
 ;; dvc
-;; (load-file "~/.emacs.d/dvc/dvc-load.el")
+(load-file "~/.emacs.d/dvc/dvc-load.el")
 
 ;; python-mode
 (autoload 'python-mode "my-python-setup" "Python editing mode." t)
