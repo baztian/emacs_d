@@ -1,30 +1,30 @@
+@SET_MAKE@
 
-
-PACKAGE_VERSION = 0
-PACKAGE_BUGREPORT = dvc-dev@gna.org
+PACKAGE_VERSION = @PACKAGE_VERSION@
+PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
 
 ##############################################################################
 # location of required programms
-prefix = /usr/local
+prefix = @prefix@
 RM   = @RM@
 ETAGS = etags
-MKDIR_P = /bin/mkdir -p
-INSTALL = /usr/bin/install -c
-INSTALL_DATA = ${INSTALL} -m 644
+MKDIR_P = @MKDIR_P@
+INSTALL = @INSTALL@
+INSTALL_DATA = @INSTALL_DATA@
 
-top_srcdir = ..
-srcdir = .
+top_srcdir = @top_srcdir@
+srcdir = @srcdir@
 
-datarootdir= ${prefix}/share
-lispdir = $(prefix)/share/emacs/site-lisp/dvc
+datarootdir= @datarootdir@
+lispdir = @lispdir@
 
-EMACS_PROG = emacs
+EMACS_PROG = @EMACS_PROG@
 
-FLAGS = --no-site-file
+FLAGS = @FLAGS@
 
 # Other settings
 
-OTHERDIRS = 
+OTHERDIRS = @OTHERDIRS@
 
 ebatch = srcdir=$(srcdir) otherdirs="$(OTHERDIRS)" \
  $(EMACS_PROG) -batch -q $(FLAGS) -l $(srcdir)/dvc-build.el -f

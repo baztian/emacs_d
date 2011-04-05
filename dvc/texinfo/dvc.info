@@ -1,5 +1,4 @@
-This is dvc.info, produced by makeinfo version 4.11 from
-../../texinfo/dvc.texinfo.
+This is dvc.info, produced by makeinfo version 4.13 from ./dvc.texinfo.
 
 INFO-DIR-SECTION Emacs
 START-INFO-DIR-ENTRY
@@ -765,11 +764,9 @@ bookmark corresponding to the version you're managing (just type `s' on
 the bookmark of your choice in the bookmark buffer). A typical value
 would be `" [%s]"': The generated summary line will then look like
 
-
 Summary:  [mark@dishevelled.net--2003-mst (patch 6-8)]
 
    That you can complete manually to something like
-
 
 Summary: Bugfix for regression tests [mark@dishevelled.net--2003-mst (patch 6-8)]
 
@@ -950,49 +947,49 @@ File: dvc.info,  Node: Variable Index,  Prev: Concept Index,  Up: Top
 
 
 Tag Table:
-Node: Top328
-Node: Installation2218
-Node: Dependencies2620
-Node: MS Windows4024
-Node: Hooking into GNU Emacs6269
-Node: DVC Tla Tour7169
-Node: A tutorial guide to DVC7771
-Node: Register an tla archive8568
-Node: Bookmarking a project9198
-Node: Creating a branch of a project and getting a project tree10280
-Node: Finding and merging missing patches11759
-Node: Reviewing and committing your changes13011
-Node: First contact14083
-Node: Tla Archive Browsing15258
-Node: Editing Files15747
-Node: Committing Files16358
-Node: Using Bookmarks17769
-Node: Bookmarks basics18035
-Node: Using bookmarks for distributed development18865
-Node: Bookmarks groups21080
-Node: Transmit patches via email21892
-Node: Send patches via Gnus22296
-Node: Receive/Apply patches via Gnus23371
-Node: Use cases24630
-Node: Anarchic development24870
-Node: Star-shaped development25076
-Node: Maintainer25753
-Node: Missing patches26277
-Node: Reviewing patches27748
-Node: Patch-log Generation28692
-Node: Contributor29790
-Node: Trouble Shooting30002
-Node: Customization31117
-Node: Internals31357
-Node: Mailing Lists31570
-Node: Wiki32011
-Node: Changes32221
-Node: The Latest Version32600
-Node: The Future32929
-Node: Known Bugs33221
-Node: TODO List33883
-Node: Thanks34129
-Node: Concept Index34238
-Node: Variable Index34817
+Node: Top316
+Node: Installation2206
+Node: Dependencies2608
+Node: MS Windows4012
+Node: Hooking into GNU Emacs6257
+Node: DVC Tla Tour7157
+Node: A tutorial guide to DVC7759
+Node: Register an tla archive8556
+Node: Bookmarking a project9186
+Node: Creating a branch of a project and getting a project tree10268
+Node: Finding and merging missing patches11747
+Node: Reviewing and committing your changes12999
+Node: First contact14071
+Node: Tla Archive Browsing15246
+Node: Editing Files15735
+Node: Committing Files16346
+Node: Using Bookmarks17757
+Node: Bookmarks basics18023
+Node: Using bookmarks for distributed development18853
+Node: Bookmarks groups21068
+Node: Transmit patches via email21880
+Node: Send patches via Gnus22284
+Node: Receive/Apply patches via Gnus23359
+Node: Use cases24618
+Node: Anarchic development24858
+Node: Star-shaped development25064
+Node: Maintainer25741
+Node: Missing patches26265
+Node: Reviewing patches27736
+Node: Patch-log Generation28680
+Node: Contributor29776
+Node: Trouble Shooting29988
+Node: Customization31103
+Node: Internals31343
+Node: Mailing Lists31556
+Node: Wiki31997
+Node: Changes32207
+Node: The Latest Version32586
+Node: The Future32915
+Node: Known Bugs33207
+Node: TODO List33869
+Node: Thanks34115
+Node: Concept Index34224
+Node: Variable Index34803
 
 End Tag Table

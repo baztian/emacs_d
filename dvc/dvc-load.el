@@ -13,14 +13,14 @@
 ;;
 ;; to your ~/.emacs.el
 
-(add-to-list 'load-path "/home/bbowe/archives/emacs/dvc/++build/lisp")
+(add-to-list 'load-path (concat (getenv "HOME") "/.emacs.d/dvc/lisp"))
 (unless (locate-library "ewoc")
-  (add-to-list 'load-path "/home/bbowe/archives/emacs/dvc/++build/lisp/contrib"))
-(add-to-list 'Info-default-directory-list "/home/bbowe/archives/emacs/dvc/++build/texinfo")
+  (add-to-list 'load-path (concat (getenv "HOME") "/.emacs.d/dvc/lisp/contrib")))
+(add-to-list 'Info-default-directory-list (concat (getenv "HOME") "/.emacs.d/dvc/texinfo"))
 
 (if (featurep 'dvc-core)
     (dvc-reload)
   (if (featurep 'xemacs)
-      (require 'dvc-autoloads "/home/bbowe/archives/emacs/dvc/++build/lisp/auto-autoloads.elc")
+      (require 'dvc-autoloads (concat (getenv "HOME") "/.emacs.d/dvc/lisp/auto-autoloads.elc"))
     (require 'dvc-autoloads)))
 
