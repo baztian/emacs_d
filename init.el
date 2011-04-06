@@ -96,7 +96,7 @@
 (define-key global-map [f2] 'cvs-examine)
 
 (setq sandboxroot "d:/sandboxes/")
-(setq fiprjdir (concat sandboxroot "sb_si_rating/"))
+(setq fiprjdir (concat "sb_si_rating/"))
 ;C-S-f1 Toggle between project roots
 (define-key global-map [C-S-f1]
   (lambda()
