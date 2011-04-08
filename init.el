@@ -53,6 +53,15 @@
 ;; python-mode
 (autoload 'python-mode "my-python-setup" "Python editing mode." t)
 
+;; yasnippet
+(require 'yasnippet) ;; not yasnippet-bundle
+;; Develop and keep personal snippets under ~/emacs.d/mysnippets
+(setq yas/root-directory '("~/.emacs.d/mysnippets"
+                           "~/.emacs.d/plugins/yasnippet-0.6.1c/snippets"))
+(yas/initialize)
+;; Map `yas/load-directory' to every element
+(mapc 'yas/load-directory yas/root-directory)
+
 ;;NXML mode
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (load-library "my-nxml")
