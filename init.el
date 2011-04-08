@@ -47,7 +47,7 @@
 (ac-config-default)
 
 ;; dvc
-(defvar bzr-executable (if (eq system-type 'windows-nt) "bzr"))
+(defvar bzr-executable "bzr")
 (load-file "~/.emacs.d/dvc/dvc-load.el")
 
 ;; python-mode
