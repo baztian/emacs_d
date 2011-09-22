@@ -22,7 +22,7 @@
 ;Show column numbers
 (column-number-mode 1)
 
-(tool-bar-mode -1)
+(if (functionp 'tool-bar-mode) (tool-bar-mode -1))
 
 ;;TRAMP should default to ssh
 (setq tramp-default-method "ssh")
