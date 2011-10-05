@@ -86,6 +86,7 @@
 ;;;   rst.el -- ReStructuredText Support for Emacs
 ;; (require 'rst)
 ;; (add-hook 'text-mode-hook 'rst-text-mode-bindings)
+(add-to-list 'auto-mode-alist '("\\.txt\\'" . rst-mode))
 
 (defun tail-open (filename)
   "Opens a file in auto-revert-tail-mode"
