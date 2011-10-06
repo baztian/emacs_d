@@ -49,7 +49,7 @@
 ;Show column numbers
 (column-number-mode 1)
 
-(tool-bar-mode -1)
+(if (functionp 'tool-bar-mode) (tool-bar-mode -1))
 
 ;;TRAMP should default to ssh
 (setq tramp-default-method "ssh")
@@ -113,6 +113,7 @@
 ;;;   rst.el -- ReStructuredText Support for Emacs
 ;; (require 'rst)
 ;; (add-hook 'text-mode-hook 'rst-text-mode-bindings)
+(add-to-list 'auto-mode-alist '("\\.txt\\'" . rst-mode))
 
 (defun tail-open (filename)
   "Opens a file in auto-revert-tail-mode"
