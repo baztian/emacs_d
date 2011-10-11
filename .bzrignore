@@ -5,3 +5,4 @@
 **/*.elc
 /server
 /ac-comphist.dat
+/url
