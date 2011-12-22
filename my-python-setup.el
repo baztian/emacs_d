@@ -37,16 +37,10 @@
 ;;  (add-hook 'find-file-hook 'flymake-find-file-hook)
 
 (setq flymakeroot (expand-file-name "~/.emacs.d/flymake/"))
-;; https://github.com/akaihola/flymake-python
 (when (load "flymake" t)
-  (defun flymake-pylint-init (&optional trigger-type)
-    (let* ((temp-file (flymake-init-create-temp-buffer-copy
-		       'flymake-create-temp-with-folder-structure))
-	   (local-file (file-relative-name
-			temp-file
-			(file-name-directory buffer-file-name)))
-	   (options (when trigger-type (list "--trigger-type" trigger-type))))
-      (list "python" (append (list (convert-standard-filename (concat flymakeroot "pyflymake.py"))) (append options (list local-file))))))
+(defun flymake-pylint-init ()
+  (list "python"
+        (list "-m" "pylint.lint" "-f" "parseable" buffer-file-name)))
 
    (add-to-list 'flymake-allowed-file-name-masks
  	       '("\\.py\\'" flymake-pylint-init)))
