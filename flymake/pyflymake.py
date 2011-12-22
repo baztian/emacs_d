@@ -268,8 +268,13 @@ class TestRunner(LintRunner):
         return self.config.TEST_RUNNER_FLAGS
 
 
+def is_root(path):
+    current_dir = os.path.dirname(os.path.abspath(os.path.curdir))
+    parent_dir = os.path.dirname(os.path.abspath(os.path.pardir))
+    return current_dir == parent_dir
+
 def find_config(path, trigger_type):
-    if path in ('', '/'):
+    if path == '' or is_root(path):
         module = DefaultConfig()
     else:
         try:
