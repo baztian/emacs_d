@@ -39,11 +39,16 @@
 (setq flymakeroot (expand-file-name "~/.emacs.d/flymake/"))
 (when (load "flymake" t)
 (defun flymake-pylint-init ()
-  (list "python"
-        (list "-m" "pylint.lint" "-f" "parseable" buffer-file-name)))
+  (let* ((temp-file (flymake-init-create-temp-buffer-copy
+                     'flymake-create-temp-inplace))
+         (local-file (file-relative-name
+                      temp-file
+                      (file-name-directory buffer-file-name))))
+    (list "python"
+          (list "-m" "pylint.lint" "-f" "parseable" local-file))))
 
    (add-to-list 'flymake-allowed-file-name-masks
- 	       '("\\.py\\'" flymake-pylint-init)))
+                '("\\.py\\'" flymake-pylint-init)))
 
 ;; ipython
 ;; If you happen to get garbage instead of colored prompts as described
