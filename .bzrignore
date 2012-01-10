@@ -2,7 +2,6 @@
 **/*.pyc
 **/*.class
 **/*.log
-**/*.elc
 /server
 /ac-comphist.dat
 /url
