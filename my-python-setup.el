@@ -14,6 +14,11 @@
      (add-to-list 'pymacs-load-path "~/.emacs.d/rope/ropemacs-0.6")
      (add-to-list 'pymacs-load-path "~/.emacs.d/rope/rope-0.9.3")))
 
+(autoload 'pylookup-lookup "pylookup")
+(autoload 'pylookup-update "pylookup")
+(setq pylookup-program "~/.emacs.d/pylookup/pylookup.py")
+(setq pylookup-db-file "~/.emacs.d/pylookup/pylookup.db")
+(global-set-key "\C-ch" 'pylookup-lookup)
 
 (require 'pycomplete)
 
