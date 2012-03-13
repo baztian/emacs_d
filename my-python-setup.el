@@ -86,3 +86,5 @@
 (add-hook 'python-mode-hook (lambda ()
 (local-set-key "\C-c\C-q" 'python-nosetests)))
 
+(require 'python-pep8)
+(require 'python-pylint)

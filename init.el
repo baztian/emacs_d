@@ -53,6 +53,7 @@
 
 ;;TRAMP should default to ssh
 (setq tramp-default-method "ssh")
+(require 'tramp)
 
 ;;Allow fetching files from HTTP servers
 (url-handler-mode)
