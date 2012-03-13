@@ -4,7 +4,9 @@
 ;; pymacs
 (setenv "PYTHONPATH" (concat (expand-file-name "~/.emacs.d/Pymacs-0.23")
                              path-separator
-                             (expand-file-name "~/.emacs.d/python-pylint")))
+                             (expand-file-name "~/.emacs.d/python-pylint")
+                             path-separator
+                             (expand-file-name "~/.emacs.d/python-pep8")))
 (autoload 'pymacs-apply "pymacs")
 (autoload 'pymacs-call "pymacs")
 (autoload 'pymacs-eval "pymacs" nil t)

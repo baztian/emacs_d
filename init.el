@@ -179,6 +179,7 @@
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
  '(global-font-lock-mode t nil (font-lock))
+ '(python-pep8-command "python -m pep8")
  '(python-pylint-command "python -m pylint.lint"))
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
