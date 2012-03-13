@@ -55,20 +55,6 @@
    (add-to-list 'flymake-allowed-file-name-masks
                 '("\\.py\\'" flymake-pylint-init)))
 
-;; ipython
-;; If you happen to get garbage instead of colored prompts as described
-;; in the previous section, you may need to set also in your .emacs file:
-(setq ansi-color-for-comint-mode t) 
-
-;; (require 'ipython)
-
-;; bicycle repair
-;; (pymacs-load "bikeemacs" "brm-")
-;; (brm-init)
-
-;; pylint
-(load-library "pylint")
-
 ;; http://paste.lisp.org/display/76342
 ;; change to a virtualenv from within a interactive python environment
 (defun insert-virtualenv-load-line (virtualenv-dir)
