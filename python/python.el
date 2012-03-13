@@ -85,10 +85,12 @@
 ;;    "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
 
 ;; For iPython 0.10 everything would be the same except for
-;; `python-shell-completion-string-code':
+;; `python-shell-completion-string-code' and
+;; `python-shell-completion-module-string-code':
 
 ;; (setq python-shell-completion-string-code
-;;       "';'.join(__IP.complete('''%s'''))\n")
+;;       "';'.join(__IP.complete('''%s'''))\n"
+;;       python-shell-completion-module-string-code "")
 
 ;; Unfortunately running iPython on Windows needs some more tweaking.
 ;; The way you must set `python-shell-interpreter' and
@@ -1707,8 +1709,6 @@ and use the following as the value of this variable:
   :type 'string
   :group 'python)
 
-(defvar python-shell-completion-original-window-configuration nil)
-
 (defun python-shell-completion--get-completions (input process completion-code)
   "Retrieve available completions for INPUT using PROCESS.
 Argument COMPLETION-CODE is the python code used to get
@@ -1722,14 +1722,38 @@ completions on the current context."
 (defun python-shell-completion--do-completion-at-point (process)
   "Do completion at point for PROCESS."
   (with-syntax-table python-dotty-syntax-table
-    (let* ((line (substring-no-properties
-                  (buffer-substring (point-at-bol) (point)) nil nil))
-           (input (substring-no-properties
-                   (or (comint-word (current-word)) "") nil nil))
-           (prompt (buffer-substring-no-properties
-                    (overlay-start comint-last-prompt-overlay)
-                    (overlay-end comint-last-prompt-overlay)))
+    (let* ((beg
+            (save-excursion
+              (let* ((paren-depth (car (syntax-ppss)))
+                     (syntax-string "w_")
+                     (syntax-list (string-to-syntax syntax-string)))
+                ;; Stop scanning for the beginning of the completion subject
+                ;; after the char before point matches a delimiter
+                (while (member (car (syntax-after (1- (point)))) syntax-list)
+                  (skip-syntax-backward syntax-string)
+                  (when (or (equal (char-before) ?\))
+                            (equal (char-before) ?\"))
+                    (forward-char -1))
+                  (while (or
+                          ;; honor initial paren depth
+                          (> (car (syntax-ppss)) paren-depth)
+                          (python-info-ppss-context 'string))
+                    (forward-char -1))))
+              (point)))
+           (end (point))
+           (line (buffer-substring-no-properties (point-at-bol) end))
+           (input (buffer-substring-no-properties beg end))
+           ;; Get the last prompt for the inferior process buffer. This is
+           ;; used for the completion code selection heuristic.
+           (prompt
+            (with-current-buffer (process-buffer process)
+              (buffer-substring-no-properties
+               (overlay-start comint-last-prompt-overlay)
+               (overlay-end comint-last-prompt-overlay))))
            (completion-code
+            ;; Check wether a prompt matches a pdb string, an import statement
+            ;; or just the standard prompt and use the correct
+            ;; python-shell-completion-*-code string
             (cond ((and (> (length python-shell-completion-pdb-string-code) 0)
                         (string-match
                          (concat "^" python-shell-prompt-pdb-regexp) prompt))
@@ -1747,32 +1771,8 @@ completions on the current context."
            (completions
             (and completion-code (> (length input) 0)
                  (python-shell-completion--get-completions
-                  line process completion-code)))
-           (completion (when completions
-                         (try-completion input completions))))
-      (cond ((eq completion t)
-             (if (eq this-command last-command)
-                 (when python-shell-completion-original-window-configuration
-                   (set-window-configuration
-                    python-shell-completion-original-window-configuration)))
-             (setq python-shell-completion-original-window-configuration nil)
-             t)
-            ((null completion)
-             (message "Can't find completion for \"%s\"" input)
-             (ding)
-             nil)
-            ((not (string= input completion))
-             (progn (delete-char (- (length input)))
-                    (insert completion)
-                    t))
-            (t
-             (unless python-shell-completion-original-window-configuration
-               (setq python-shell-completion-original-window-configuration
-                     (current-window-configuration)))
-             (with-output-to-temp-buffer "*Python Completions*"
-               (display-completion-list
-                (all-completions input completions)))
-             t)))))
+                  input process completion-code))))
+      (list beg end completions))))
 
 (defun python-shell-completion-complete-at-point ()
   "Perform completion at point in inferior Python process."
@@ -1894,7 +1894,7 @@ inferior python process is updated properly."
   (interactive)
   (let ((process (python-shell-get-process)))
     (if (not process)
-        (error "Completion needs an inferior Python process running")
+        (error "Completion needs an inferior Python process running.")
       (python-shell-completion--do-completion-at-point process))))
 
 (add-to-list 'debug-ignored-errors
