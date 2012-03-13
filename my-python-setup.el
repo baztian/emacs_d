@@ -1,3 +1,4 @@
+(require 'python)
 (setq auto-mode-alist (cons '("\\.py$" . python-mode) auto-mode-alist))
 (setq interpreter-mode-alist (cons '("python" . python-mode)
 				   interpreter-mode-alist))
@@ -14,7 +15,6 @@
 (autoload 'pymacs-load "pymacs" nil t)
 (eval-after-load "pymacs"
   '(progn
-     (add-to-list 'pymacs-load-path "~/.emacs.d/python-mode-1.0")
      (add-to-list 'pymacs-load-path "~/.emacs.d/rope/ropemacs-0.6")
      (add-to-list 'pymacs-load-path "~/.emacs.d/rope/rope-0.9.3")))
 
@@ -23,8 +23,6 @@
 (setq pylookup-program "~/.emacs.d/pylookup/pylookup.py")
 (setq pylookup-db-file "~/.emacs.d/pylookup/pylookup.db")
 (global-set-key "\C-ch" 'pylookup-lookup)
-
-(require 'pycomplete)
 
 ;; rope refactoring
 (pymacs-load "ropemacs" "rope-")
@@ -92,3 +90,7 @@
 
 (require 'python-pep8)
 (require 'python-pylint)
+;; Bind RET to newline-and-indent
+(add-hook 'python-mode-hook
+          '(lambda ()
+             (define-key  python-mode-map "\C-m" 'newline-and-indent)))
