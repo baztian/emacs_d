@@ -98,4 +98,4 @@
 ;; Bind RET to newline-and-indent
 (add-hook 'python-mode-hook
           '(lambda ()
-             (local-set-key (kbd "RET") 'newline-and-indent)))
+             (define-key  python-mode-map "\C-m" 'newline-and-indent)))
