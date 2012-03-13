@@ -53,6 +53,7 @@
 
 ;;TRAMP should default to ssh
 (setq tramp-default-method "ssh")
+(require 'tramp)
 
 ;;Allow fetching files from HTTP servers
 (url-handler-mode)
@@ -173,10 +174,16 @@
     ))
 
 (custom-set-variables
-  ;; custom-set-variables was added by Custom -- don't edit or cut/paste it!
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
- '(global-font-lock-mode t nil (font-lock)))
+  ;; If there is more than one, they won't work right.
+ '(global-font-lock-mode t nil (font-lock))
+ '(python-pep8-command "python -m pep8")
+ '(python-pylint-command "python -m pylint.lint"))
 (custom-set-faces
-  ;; custom-set-faces was added by Custom -- don't edit or cut/paste it!
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
  )

@@ -2,7 +2,11 @@
 (setq interpreter-mode-alist (cons '("python" . python-mode)
 				   interpreter-mode-alist))
 ;; pymacs
-(setenv "PYTHONPATH" (concat (getenv "HOME") "/.emacs.d/Pymacs-0.23"))
+(setenv "PYTHONPATH" (concat (expand-file-name "~/.emacs.d/Pymacs-0.23")
+                             path-separator
+                             (expand-file-name "~/.emacs.d/python-pylint")
+                             path-separator
+                             (expand-file-name "~/.emacs.d/python-pep8")))
 (autoload 'pymacs-apply "pymacs")
 (autoload 'pymacs-call "pymacs")
 (autoload 'pymacs-eval "pymacs" nil t)
@@ -86,3 +90,5 @@
 (add-hook 'python-mode-hook (lambda ()
 (local-set-key "\C-c\C-q" 'python-nosetests)))
 
+(require 'python-pep8)
+(require 'python-pylint)
