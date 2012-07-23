@@ -81,6 +81,11 @@
 ;; python-mode
 (autoload 'python-mode "my-python-setup" "Python editing mode." t)
 
+(require 'elemental)
+(global-set-key (kbd "C-(") 'elem/backward-one)
+(global-set-key (kbd "C-)") 'elem/forward)
+(global-set-key (kbd "C-*") 'elem/transpose)
+
 ;; yasnippet
 (require 'yasnippet) ;; not yasnippet-bundle
 ;; Develop and keep personal snippets under ~/emacs.d/mysnippets
