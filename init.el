@@ -10,6 +10,9 @@
 (server-start)
 
 ;; Sets coding system priority and default input method
+(prefer-coding-system 'utf-8)
+(setq coding-system-for-read 'utf-8)
+(setq coding-system-for-write 'utf-8)
 (set-language-environment 'German)
 
 ;; space for tabs
