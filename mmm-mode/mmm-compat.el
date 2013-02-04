@@ -2,8 +2,8 @@
 
 ;; Copyright (C) 2000 by Michael Abraham Shulman
 
-;; Author: Michael Abraham Shulman <mas@kurukshetra.cjb.net>
-;; Version: $Id: mmm-compat.el,v 1.8 2000/09/16 00:12:33 mas Exp $
+;; Author: Michael Abraham Shulman <viritrilbia@users.sourceforge.net>
+;; Version: $Id: mmm-compat.el,v 1.9 2003/03/09 17:04:03 viritrilbia Exp $
 
 ;;{{{ GPL
 
@@ -28,8 +28,8 @@
 
 ;; This file provides a number of hacks that are necessary for MMM
 ;; Mode to function in different Emacsen.  MMM Mode is designed for
-;; Emacs 20, but these hacks usually enable it to work almost
-;; perfectly in Emacs 19 and XEmacs 20 or 21.
+;; FSF Emacs 20 and 21, but these hacks usually enable it to work
+;; almost perfectly in Emacs 19 and XEmacs 20 or 21.
 
 ;;; Code:
 
@@ -65,9 +65,9 @@
   (defmacro defgroup (&rest args)
     nil)
   (defmacro defface (var values doc &rest args)
-    (` (make-face (quote (, var)))))
+    `(make-face (quote ,var)))
   (defmacro defcustom (var value doc &rest args) 
-    (` (defvar (, var) (, value) (, doc)))))
+    `(defvar ,var ,value ,doc)))
 
 ;;}}}
 ;;{{{ Regexp-Opt (Emacs 19)
@@ -156,37 +156,14 @@ This makes `@' in skeletons act approximately like it does in FSF."
 ;;{{{ Make Temp Buffers (XEmacs)
 
 (defmacro mmm-make-temp-buffer (buffer name)
-  "Return a buffer called NAME including the text of BUFFER.
+  "Return a buffer with name based on NAME including the text of BUFFER.
 This text should not be modified."
   (if (fboundp 'make-indirect-buffer)
-      `(make-indirect-buffer ,buffer ,name)
+      `(make-indirect-buffer ,buffer (generate-new-buffer-name ,name))
     `(save-excursion
-       (set-buffer (get-buffer-create ,name))
+       (set-buffer (generate-new-buffer ,name))
        (insert-buffer ,buffer)
        (current-buffer))))
-
-;;}}}
-;;{{{ Font Lock Available (Emacs w/o X)
-
-(defvar mmm-font-lock-available-p (or window-system mmm-xemacs)
-  "Whether font-locking is available.
-Emacs 19 and 20 only provide font-lock with a window system in use.")
-
-;;}}}
-;;{{{ Font Lock Defaults (XEmacs)
-
-(defmacro mmm-set-font-lock-defaults ()
-  "Set font-lock defaults without trying to turn font-lock on.
-In XEmacs, `font-lock-set-defaults' calls `font-lock-set-defaults-1'
-to do the real work but then `turn-on-font-lock', which in turn calls
-`font-lock-mode', which unsets the defaults if running in a hidden
-buffer \(name begins with a space).  So in XEmacs, we just call
-`font-lock-set-defaults-1' directly."
-  (if mmm-xemacs
-      `(font-lock-set-defaults-1)
-    `(font-lock-set-defaults)))
-
-;;}}}
 
 (provide 'mmm-compat)
 

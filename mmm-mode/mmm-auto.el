@@ -3,7 +3,7 @@
 ;; Copyright (C) 2000 by Michael Abraham Shulman
 
 ;; Author: Michael Abraham Shulman <mas@kurukshetra.cjb.net>
-;; Version: $Id: mmm-auto.el,v 1.17 2001/01/12 23:39:27 mas Exp $
+;; Version: $Id: mmm-auto.el,v 1.22 2004/11/19 02:33:36 alanshutko Exp $
 
 ;;{{{ GPL
 
@@ -66,6 +66,7 @@
 
 (defvar mmm-autoloaded-classes
   '((mason "mmm-mason" nil)
+    (myghty "mmm-myghty" nil)
     (embedded-css "mmm-sample" nil)
     (html-js "mmm-sample" nil)
     (here-doc "mmm-sample" nil)
@@ -75,6 +76,10 @@
     (file-variables "mmm-sample" nil)
     (rpm-sh "mmm-rpm" t)
     (rpm "mmm-rpm" nil)
+    (cweb "mmm-cweb" nil)
+    (sgml-dtd "mmm-sample" nil)
+    (noweb "mmm-noweb" nil)
+    (html-php "mmm-sample" nil)
     )
   "Alist of submode classes autoloaded from files.
 Elements look like \(CLASS FILE PRIVATE) where CLASS is a submode
@@ -143,8 +148,7 @@ everything in `mmm-major-mode-hook' will be run."
   (remove-hook 'post-command-hook 'mmm-check-changed-buffers)
   (dolist (buffer mmm-changed-buffers-list)
     (when (buffer-live-p buffer)
-      (save-excursion
-        (set-buffer buffer)
+      (with-current-buffer buffer
         (mmm-run-major-mode-hook))))
   (setq mmm-changed-buffers-list '()))
 
