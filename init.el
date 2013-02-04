@@ -21,6 +21,9 @@
 ;; highlight matching parentheses
 (show-paren-mode 1)
 
+;; Indentation for HTML files
+(setq sgml-basic-offset 4)
+
 ;; Show offscreen matching parentheses in minibuffer. In GNU Emacs
 ;; 23.2, this information shows up when show-paren-mode is enabled,
 ;; but then only directly after typing a closing paren. If you use the
@@ -103,8 +106,22 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (load-library "my-nxml")
 
+(require 'multi-web-mode)
+(setq mweb-default-major-mode 'html-mode)
+(setq mweb-tags 
+  '((php-mode "<\\?php\\|<\\? \\|<\\?=" "\\?>")
+    (js-mode  "<script.*?>" "</script>")
+    (css-mode "<style.*?>" "</style>")))
+(setq mweb-filename-extensions '("php" "htm" "html" "ctp" "phtml" "php4" "php5"))
+(multi-web-global-mode 1)
+
 ;; mmm-mode
-(setq mmm-global-mode 'maybe)
+;; (require 'mmm-mode)
+;; (setq mmm-global-mode 'maybe)
+;; (add-to-list 'mmm-mode-ext-classes-alist
+;;          '(html-mode nil html-js))
+;; (add-to-list 'mmm-mode-ext-classes-alist
+;;          '(html-mode nil embedded-css))
 
 ;; kid-nxml-mode
 ;; (mmm-add-mode-ext-class nil "\\.kid?\\'" 'html-kid)
