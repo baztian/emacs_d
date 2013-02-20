@@ -24,6 +24,22 @@
 ;; Indentation for HTML files
 (setq sgml-basic-offset 4)
 
+;;Configuration for hunspell dictionaries
+(setq ispell-dictionary-base-alist
+  '(
+        ("de_DE"
+         "[a-zäöüßA-ZÄÖÜ]" "[^a-zäöüßA-ZÄÖÜ]" "[']" nil
+         ("-d" "de_DE") nil utf-8)
+        ("en_US"
+         "[a-zA-Z]" "[^a-zA-Z]" "[']" nil
+         ("-d" "en_US") nil utf-8)
+;;        ("en_GB"
+;;         "[a-zA-Z]" "[^a-zA-Z]" "[']" nil
+;;         ("-d" "en_GB") nil utf-8)
+    )
+)
+(setq-default ispell-program-name "hunspell")
+
 ;; Show offscreen matching parentheses in minibuffer. In GNU Emacs
 ;; 23.2, this information shows up when show-paren-mode is enabled,
 ;; but then only directly after typing a closing paren. If you use the
