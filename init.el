@@ -10,13 +10,16 @@
 (server-start)
 
 ;; Sets coding system priority and default input method
-(prefer-coding-system 'utf-8)
-(setq coding-system-for-read 'utf-8)
-(setq coding-system-for-write 'utf-8)
+(set-default buffer-file-coding-system 'utf-8-unix)
+(set-default-coding-systems 'utf-8-unix)
+(prefer-coding-system 'utf-8-unix)
+(set-default default-buffer-file-coding-system 'utf-8-unix)
 (set-language-environment 'German)
 
-;; space for tabs
-(setq-default indent-tabs-mode nil)
+;; Fuzzy check indent format (tabs or spaces) of current buffer. and set indent-tabs-mode and format code automatically.
+(require 'fuzzy-format)
+(setq fuzzy-format-default-indent-tabs-mode nil)
+(global-fuzzy-format-mode t)
 
 ;; highlight matching parentheses
 (show-paren-mode 1)
