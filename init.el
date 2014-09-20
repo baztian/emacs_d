@@ -9,6 +9,11 @@
 
 (server-start)
 
+;; Ask for confirmation before quitting Emacs
+(add-hook 'kill-emacs-query-functions
+          (lambda () (y-or-n-p "Do you really want to exit Emacs? "))
+          'append)
+
 ;; Sets coding system priority and default input method
 (set-default buffer-file-coding-system 'utf-8-unix)
 (set-default-coding-systems 'utf-8-unix)
