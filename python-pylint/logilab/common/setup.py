@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # pylint: disable=W0404,W0622,W0704,W0613
-# copyright 2003-2011 LOGILAB S.A. (Paris, FRANCE), all rights reserved.
+# copyright 2003-2012 LOGILAB S.A. (Paris, FRANCE), all rights reserved.
 # contact http://www.logilab.fr/ -- mailto:contact@logilab.fr
 #
 # This file is part of logilab-common.
@@ -38,12 +38,7 @@ except ImportError:
     from distutils.command import install_lib
     USE_SETUPTOOLS = 0
 
-try:
-    # python3
-    from distutils.command.build_py import build_py_2to3 as build_py
-except ImportError:
-    # python2.x
-    from distutils.command.build_py import build_py
+from distutils.command.build_py import build_py
 
 sys.modules.pop('__pkginfo__', None)
 # import optional features
@@ -59,7 +54,9 @@ subpackage_of = getattr(__pkginfo__, 'subpackage_of', None)
 include_dirs = getattr(__pkginfo__, 'include_dirs', [])
 ext_modules = getattr(__pkginfo__, 'ext_modules', None)
 install_requires = getattr(__pkginfo__, 'install_requires', None)
+test_require = getattr(__pkginfo__, 'test_require', None)
 dependency_links = getattr(__pkginfo__, 'dependency_links', [])
+classifiers = getattr(__pkginfo__, 'classifiers', [])
 
 STD_BLACKLIST = ('CVS', '.svn', '.hg', 'debian', 'dist', 'build')
 
@@ -104,8 +101,7 @@ except ImportError:
 '''
 
 class MyInstallLib(install_lib.install_lib):
-    """extend install_lib command to handle  package __init__.py and
-    include_dirs variable if necessary
+    """extend install_lib command to handle package __init__.py if necessary
     """
     def run(self):
         """overridden from install_lib class"""
@@ -118,16 +114,26 @@ class MyInstallLib(install_lib.install_lib):
                 stream = open(product_init, 'w')
                 stream.write(EMPTY_FILE)
                 stream.close()
+
+
+class MyBuildPy(build_py):
+    """extend build_by command to handle include_dirs variable if necessary
+    """
+    def run(self):
+        """overridden from install_lib class"""
+        build_py.run(self)
         # manually install included directories if any
         if include_dirs:
             if subpackage_of:
                 base = join(subpackage_of, modname)
             else:
                 base = modname
+            basedir = os.path.join(self.build_lib, base)
             for directory in include_dirs:
-                dest = join(self.install_dir, base, directory)
+                dest = join(basedir, directory)
                 shutil.rmtree(dest, ignore_errors=True)
                 shutil.copytree(directory, dest)
+
 
 def install(**kwargs):
     """setup entry point"""
@@ -148,6 +154,7 @@ def install(**kwargs):
         packages = [modname] + get_packages(os.getcwd(), modname)
     if USE_SETUPTOOLS and install_requires:
         kwargs['install_requires'] = install_requires
+        kwargs['test_require'] = test_require
         kwargs['dependency_links'] = dependency_links
     kwargs['packages'] = packages
     return setup(name = distname,
@@ -155,6 +162,7 @@ def install(**kwargs):
                  license = license,
                  description = description,
                  long_description = long_description,
+                 classifiers = classifiers,
                  author = author,
                  author_email = author_email,
                  url = web,
@@ -162,7 +170,7 @@ def install(**kwargs):
                  data_files = data_files,
                  ext_modules = ext_modules,
                  cmdclass = {'install_lib': MyInstallLib,
-                             'build_py':    build_py},
+                             'build_py': MyBuildPy},
                  **kwargs
                  )
 

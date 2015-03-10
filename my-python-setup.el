@@ -1,13 +1,43 @@
-(require 'python)
-(setq auto-mode-alist (cons '("\\.py$" . python-mode) auto-mode-alist))
-(setq interpreter-mode-alist (cons '("python" . python-mode)
-				   interpreter-mode-alist))
-;; pymacs
 (setenv "PYTHONPATH" (concat (expand-file-name "~/.emacs.d/Pymacs-0.23")
+                             path-separator
+                             (expand-file-name "~/.emacs.d/python-jedi")
                              path-separator
                              (expand-file-name "~/.emacs.d/python-pylint")
                              path-separator
+                             (expand-file-name "~/.emacs.d/python-epc")
+                             path-separator
                              (expand-file-name "~/.emacs.d/python-pep8")))
+(mapc 'install-if-needed '(python-mode jedi))
+
+(require 'python-mode)
+(add-to-list 'auto-mode-alist '("\\.py$" . python-mode))
+(setq py-electric-colon-active t)
+(add-hook 'python-mode-hook 'autopair-mode)
+(add-hook 'python-mode-hook 'yas-minor-mode)
+
+;; ;; Jedi settings
+(require 'jedi)
+;; It's also required to run "pip install --user jedi" and "pip
+;; install --user epc" to get the Python side of the library work
+;; correctly.
+;; With the same interpreter you're using.
+
+;; if you need to change your python intepreter, if you want to change it
+;; (setq jedi:server-command
+;;       '("python2" "/home/andrea/.emacs.d/elpa/jedi-0.1.2/jediepcserver.py"))
+
+(add-hook 'python-mode-hook
+	  (lambda ()
+	    (jedi:setup)
+	    (jedi:ac-setup)
+            (local-set-key "\C-cd" 'jedi:show-doc)
+            (local-set-key (kbd "M-SPC") 'jedi:complete)
+            (local-set-key (kbd "M-.") 'jedi:goto-definition)))
+
+
+(add-hook 'python-mode-hook 'auto-complete-mode)
+
+;; pymacs
 (autoload 'pymacs-apply "pymacs")
 (autoload 'pymacs-call "pymacs")
 (autoload 'pymacs-eval "pymacs" nil t)
@@ -27,35 +57,6 @@
 ;; rope refactoring
 (pymacs-load "ropemacs" "rope-")
 (setq ropemacs-enable-autoimport t)
-
-;; flymake with pyflakes
-;; (when (load "flymake" t)
-;;        (defun flymake-pyflakes-init ()
-;;          (let* ((temp-file (flymake-init-create-temp-buffer-copy
-;;                             'flymake-create-temp-inplace))
-;;             (local-file (file-relative-name
-;;                          temp-file
-;;                          (file-name-directory buffer-file-name))))
-;;            (list "pyflakes" (list local-file))))
-
-;;        (add-to-list 'flymake-allowed-file-name-masks
-;;                 '("\\.py\\'" flymake-pyflakes-init)))
-
-;;  (add-hook 'find-file-hook 'flymake-find-file-hook)
-
-(setq flymakeroot (expand-file-name "~/.emacs.d/flymake/"))
-(when (load "flymake" t)
-(defun flymake-pylint-init ()
-  (let* ((temp-file (flymake-init-create-temp-buffer-copy
-                     'flymake-create-temp-inplace))
-         (local-file (file-relative-name
-                      temp-file
-                      (file-name-directory buffer-file-name))))
-    (list "python"
-          (list "-m" "pylint.lint" "-f" "parseable" local-file))))
-
-   (add-to-list 'flymake-allowed-file-name-masks
-                '("\\.py\\'" flymake-pylint-init)))
 
 ;; http://paste.lisp.org/display/76342
 ;; change to a virtualenv from within a interactive python environment
@@ -85,11 +86,10 @@
                             python-bin-dir python-bin-dir directory file)
                     )))
 
-(add-hook 'python-mode-hook (lambda ()
-(local-set-key "\C-c\C-q" 'python-nosetests)))
+;; (add-hook 'python-mode-hook (lambda ()
+;;                               (local-set-key "\C-c\C-q" 'python-nosetests)))
 
 (require 'python-pep8)
-(require 'python-pylint)
 ;; Bind RET to newline-and-indent
 (add-hook 'python-mode-hook
           '(lambda ()

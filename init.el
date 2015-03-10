@@ -1,3 +1,6 @@
+
+(server-start)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;Library Paths
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -7,7 +10,27 @@
 (when (file-exists-p "/usr/share/emacs/site-lisp/site-gentoo.el")
   (load "/usr/share/emacs/site-lisp/site-gentoo"))
 
-(server-start)
+;; Requisites: Emacs >= 24
+(require 'package)
+(package-initialize)
+
+(add-to-list 'package-archives
+	     '("melpa" . "http://melpa.milkbox.net/packages/"))
+
+(when (not package-archive-contents)
+  (package-refresh-contents))
+;; (package-refresh-contents)
+
+(defun install-if-needed (package)
+  (unless (package-installed-p package)
+    (package-install package)))
+
+;; make more packages available with the package installer
+(setq to-install
+      '(magit yasnippet auto-complete autopair find-file-in-repository flycheck))
+
+(mapc 'install-if-needed to-install)
+
 
 ;; Ask for confirmation before quitting Emacs
 (add-hook 'kill-emacs-query-functions
@@ -27,7 +50,7 @@
 (global-fuzzy-format-mode t)
 
 ;; highlight matching parentheses
-(show-paren-mode 1)
+(show-paren-mode t)
 
 ;; Indentation for HTML files
 (setq sgml-basic-offset 4)
@@ -89,8 +112,11 @@
 ;;Allow fetching files from HTTP servers
 (url-handler-mode)
 
-;; swbuff-y
-(load-library "swbuff-y")
+;; "Interactively Do Things"
+(ido-mode t)
+
+;; use shift to move around windows
+(windmove-default-keybindings 'shift)
 
 ;; subversion backend for vc
 (add-to-list 'vc-handled-backends 'SVN)
@@ -109,7 +135,26 @@
 (defvar bzr-executable "bzr")
 (load-file "~/.emacs.d/dvc/dvc-load.el")
 
-;; python-mode
+(require 'magit)
+(global-set-key "\C-xg" 'magit-status)
+
+(require 'auto-complete)
+(require 'autopair)
+(require 'yasnippet)
+(require 'flycheck)
+(global-flycheck-mode t)
+
+(global-set-key [f7] 'find-file-in-repository)
+
+; auto-complete mode extra settings
+(setq
+ ac-auto-start 2
+ ac-override-local-map nil
+ ac-use-menu-map t
+ ac-candidate-limit 20)
+
+;; ;; Python mode settings
+;; (load-library "my-python-setup")
 (autoload 'python-mode "my-python-setup" "Python editing mode." t)
 
 (require 'elemental)
@@ -118,13 +163,13 @@
 (global-set-key (kbd "C-*") 'elem/transpose)
 
 ;; yasnippet
-(require 'yasnippet) ;; not yasnippet-bundle
+;; (require 'yasnippet) ;; not yasnippet-bundle
 ;; Develop and keep personal snippets under ~/emacs.d/mysnippets
-(setq yas/root-directory '("~/.emacs.d/mysnippets"
-                           "~/.emacs.d/plugins/yasnippet-0.6.1c/snippets"))
-(yas/initialize)
+;; (setq yas/root-directory '("~/.emacs.d/mysnippets"
+;;                           "~/.emacs.d/plugins/yasnippet-0.6.1c/snippets"))
+;; (yas/initialize)
 ;; Map `yas/load-directory' to every element
-(mapc 'yas/load-directory yas/root-directory)
+;; (mapc 'yas/load-directory yas/root-directory)
 
 ;;NXML mode
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
