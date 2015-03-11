@@ -1,4 +1,4 @@
-(setenv "PYTHONPATH" (concat (expand-file-name "~/.emacs.d/Pymacs-0.23")
+(setenv "PYTHONPATH" (concat (expand-file-name "~/.emacs.d/Pymacs")
                              path-separator
                              (expand-file-name "~/.emacs.d/python-jedi")
                              path-separator
