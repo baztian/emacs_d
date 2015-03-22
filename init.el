@@ -10,6 +10,12 @@
 (when (file-exists-p "/usr/share/emacs/site-lisp/site-gentoo.el")
   (load "/usr/share/emacs/site-lisp/site-gentoo"))
 
+;; add ~/.emacs.d/bin to PATH
+(setenv "PATH" (concat (expand-file-name "~/.emacs.d/bin")
+                       path-separator
+                       (getenv "PATH")))
+(add-to-list 'exec-path (expand-file-name "~/.emacs.d/bin"))
+
 ;; Requisites: Emacs >= 24
 (require 'package)
 (package-initialize)
@@ -140,9 +146,8 @@
 
 (require 'auto-complete)
 (require 'autopair)
-(require 'yasnippet)
 (require 'flycheck)
-(global-flycheck-mode t)
+(add-hook 'after-init-hook #'global-flycheck-mode)
 
 (global-set-key [f7] 'find-file-in-repository)
 
@@ -163,13 +168,10 @@
 (global-set-key (kbd "C-*") 'elem/transpose)
 
 ;; yasnippet
-;; (require 'yasnippet) ;; not yasnippet-bundle
-;; Develop and keep personal snippets under ~/emacs.d/mysnippets
-;; (setq yas/root-directory '("~/.emacs.d/mysnippets"
-;;                           "~/.emacs.d/plugins/yasnippet-0.6.1c/snippets"))
-;; (yas/initialize)
-;; Map `yas/load-directory' to every element
-;; (mapc 'yas/load-directory yas/root-directory)
+;; Develop and keep personal snippets under ~/emacs.d/snippets.
+;; See 'yas/root-directory where the snippets are being searched for.
+(require 'yasnippet) ;; not yasnippet-bundle
+(yas/initialize)
 
 ;;NXML mode
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

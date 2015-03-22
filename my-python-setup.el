@@ -7,6 +7,7 @@
                              (expand-file-name "~/.emacs.d/python-epc")
                              path-separator
                              (expand-file-name "~/.emacs.d/python-pep8")))
+
 (mapc 'install-if-needed '(python-mode jedi))
 
 (require 'python-mode)
@@ -55,8 +56,9 @@
 (global-set-key "\C-ch" 'pylookup-lookup)
 
 ;; rope refactoring
-(pymacs-load "ropemacs" "rope-")
+(setq ropemacs-enable-shortcuts 'nil)
 (setq ropemacs-enable-autoimport t)
+(pymacs-load "ropemacs" "rope-")
 
 ;; http://paste.lisp.org/display/76342
 ;; change to a virtualenv from within a interactive python environment
