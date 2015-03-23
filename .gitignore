@@ -1,8 +1,8 @@
-**/*~
-**/*.pyc
-**/*.class
-**/*.log
+*~
+*.pyc
+*.class
+*.log
+pylookup.db
 /server
 /ac-comphist.dat
 /url
-./pylookup/pylookup.db
