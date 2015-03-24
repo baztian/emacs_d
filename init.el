@@ -132,11 +132,6 @@
 (eval-after-load 'vc-bzr
   (setq vc-handled-backends (delq 'Bzr vc-handled-backends)))
 
-;; autocomplete
-(require 'auto-complete-config)
-(add-to-list 'ac-dictionary-directories "~/.emacs.d/autocomplete/ac-dict")
-(ac-config-default)
-
 ;; dvc
 (defvar bzr-executable "bzr")
 (load-file "~/.emacs.d/dvc/dvc-load.el")
@@ -144,22 +139,22 @@
 (require 'magit)
 (global-set-key "\C-xg" 'magit-status)
 
-(require 'auto-complete)
 (require 'autopair)
 (require 'flycheck)
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
 (global-set-key [f7] 'find-file-in-repository)
 
+;; (add-to-list 'ac-dictionary-directories "~/.emacs.d/dict")
+(require 'auto-complete-config)
 ; auto-complete mode extra settings
-(setq
- ac-auto-start 2
- ac-override-local-map nil
- ac-use-menu-map t
- ac-candidate-limit 20)
+;; (setq
+;;  ac-auto-start 2
+;;  ac-use-menu-map t
+;;  ac-candidate-limit 20)
+(ac-config-default)
 
 ;; ;; Python mode settings
-;; (load-library "my-python-setup")
 (autoload 'python-mode "my-python-setup" "Python editing mode." t)
 
 (require 'elemental)
