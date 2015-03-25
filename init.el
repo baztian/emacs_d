@@ -304,6 +304,10 @@ by using nxml's indentation rules."
     (set-variable 'paragraph-start '"[0-9][0-9][0-9][0-9]-" t)
     ))
 
+;; Load custom stuff
+(when (file-exists-p "~/.emacs_custom.el")
+  (load "~/.emacs_custom"))
+
 (custom-set-variables
   ;; custom-set-variables was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
