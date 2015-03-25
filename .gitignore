@@ -6,3 +6,4 @@ pylookup.db
 /server
 /ac-comphist.dat
 /url
+/elpa/*-readme.txt
