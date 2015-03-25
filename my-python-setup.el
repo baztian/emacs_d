@@ -36,7 +36,11 @@
             (local-set-key (kbd "M-.") 'jedi:goto-definition)))
 
 
-(add-hook 'python-mode-hook 'auto-complete-mode)
+;; (add-hook 'python-mode-hook 'auto-complete-mode)
+;; See https://github.com/auto-complete/auto-complete/issues/357
+;; (add-hook 'python-mode-hook
+;;           (lambda ()
+;;             (push 'ac-source-yasnippet ac-sources)))
 
 ;; pymacs
 (autoload 'pymacs-apply "pymacs")

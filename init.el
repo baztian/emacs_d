@@ -147,12 +147,14 @@
 
 ;; (add-to-list 'ac-dictionary-directories "~/.emacs.d/dict")
 (require 'auto-complete-config)
-; auto-complete mode extra settings
-;; (setq
-;;  ac-auto-start 2
-;;  ac-use-menu-map t
-;;  ac-candidate-limit 20)
 (ac-config-default)
+; auto-complete mode extra settings
+(setq
+ ac-use-menu-map t
+ ac-candidate-limit 20)
+;; Enable yasnippet auto-completion globally (see
+;; https://github.com/auto-complete/auto-complete/issues/357)
+(setq-default ac-sources (push 'ac-source-yasnippet ac-sources))
 
 ;; ;; Python mode settings
 (autoload 'python-mode "my-python-setup" "Python editing mode." t)
