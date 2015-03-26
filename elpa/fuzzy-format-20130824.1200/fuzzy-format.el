@@ -18,6 +18,7 @@
 ;; Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
 ;; Version: 0.1.1
+;; Package-Version: 20130824.1200
 ;; Author: k1LoW (Kenichirou Oyama), <k1lowxb [at] gmail [dot] com> <k1low [at] 101000lab [dot] org>
 ;; URL: http://code.101000lab.org, http://trac.codecheck.in
 
