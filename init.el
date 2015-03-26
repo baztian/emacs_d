@@ -7,8 +7,6 @@
 (add-to-list 'load-path "~/.emacs.d")
 (progn (cd "~/.emacs.d") (normal-top-level-add-subdirs-to-load-path))
 (cd "~")
-(when (file-exists-p "/usr/share/emacs/site-lisp/site-gentoo.el")
-  (load "/usr/share/emacs/site-lisp/site-gentoo"))
 
 ;; add ~/.emacs.d/bin to PATH
 (setenv "PATH" (concat (expand-file-name "~/.emacs.d/bin")
@@ -25,7 +23,6 @@
 
 (when (not package-archive-contents)
   (package-refresh-contents))
-;; (package-refresh-contents)
 
 (defun install-if-needed (package)
   (unless (package-installed-p package)
@@ -264,48 +261,6 @@ by using nxml's indentation rules."
 ;F1: goto-line
 (define-key global-map [f1] 'goto-line)
 
-;F2: cvs-examine
-(define-key global-map [f2] 'cvs-examine)
-
-(setq sandboxroot "d:/sandboxes/")
-(setq fiprjdir (concat "sb_si_rating/"))
-;C-S-f1 Toggle between project roots
-(define-key global-map [C-S-f1]
-  (lambda()
-    (interactive)
-    (if (equal fiprjdir "sb_si_rating/")
-        (setq fiprjdir "sb_si_rating_ntueb/")
-        (setq fiprjdir "sb_si_rating/")
-    )
-    (message (concat "fiprjdir = " fiprjdir))
-))
-
-;C-F1: open serverlog.log
-(define-key global-map [C-f1]
-  (lambda()
-    (interactive)
-    (tail-open (concat sandboxroot fiprjdir "classes/log/serverlog.log"))
-    (rename-buffer (concat fiprjdir "serverlog.log"))
-    ;; (make-local-variable 'coding)
-    ;; (make-variable-buffer-local 'coding)
-    ;; (setq coding 'dos)
-    ;;(set-variable 'coding 'dos t)
-    (set-variable 'paragraph-start '"[RL][ci][RL]c\ " t)
-    ))
-
-;C-F2: open client.log
-(define-key global-map [C-f2]
-  (lambda()
-    (interactive)
-    (tail-open (concat sandboxroot fiprjdir "classes/log/client.log"))
-    (rename-buffer (concat fiprjdir "client.log"))
-    ;; (make-local-variable 'coding)
-    ;; (make-variable-buffer-local 'coding)
-    ;; (setq coding 'dos)
-    ;;(set-variable 'coding 'dos t)
-    (set-variable 'paragraph-start '"[0-9][0-9][0-9][0-9]-" t)
-    ))
-
 ;; Load custom stuff
 (when (file-exists-p "~/.emacs_custom.el")
   (load "~/.emacs_custom"))
@@ -315,9 +270,7 @@ by using nxml's indentation rules."
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- '(global-font-lock-mode t nil (font-lock))
- '(python-pep8-command "python -m pep8")
- '(python-pylint-command "python -m pylint.lint"))
+ '(global-font-lock-mode t nil (font-lock)))
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
