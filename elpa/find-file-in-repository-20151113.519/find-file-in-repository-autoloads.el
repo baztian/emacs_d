@@ -4,7 +4,7 @@
 (add-to-list 'load-path (directory-file-name (or (file-name-directory #$) (car load-path))))
 
 ;;;### (autoloads nil "find-file-in-repository" "find-file-in-repository.el"
-;;;;;;  (22544 46919 99141 700000))
+;;;;;;  (22544 53563 751328 700000))
 ;;; Generated autoloads from find-file-in-repository.el
 
 (autoload 'find-file-in-repository "find-file-in-repository" "\

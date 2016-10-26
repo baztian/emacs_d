@@ -14,26 +14,32 @@
                        (getenv "PATH")))
 (add-to-list 'exec-path (expand-file-name "~/.emacs.d/bin"))
 
+;; make more packages available with the package installer
 ;; Requisites: Emacs >= 24
 (require 'package)
+(add-to-list 'package-archives
+	     '("melpa" . "http://melpa.org/packages/"))
 (package-initialize)
 
-(add-to-list 'package-archives
-	     '("melpa" . "http://melpa.milkbox.net/packages/"))
+(setq url-http-attempt-keepalives nil)
 
-(when (not package-archive-contents)
-  (package-refresh-contents))
+(defvar prelude-packages
+  '(magit yasnippet auto-complete autopair find-file-in-repository flycheck fuzzy-format vlf)
+  "A list of packages to ensure are installed at launch.")
 
-(defun install-if-needed (package)
-  (unless (package-installed-p package)
-    (package-install package)))
+(defun prelude-packages-installed-p ()
+  (cl-loop for p in prelude-packages
+	   when (not (package-installed-p p)) do (cl-return nil)
+	   finally (cl-return t)))
 
-;; make more packages available with the package installer
-(setq to-install
-      '(magit yasnippet auto-complete autopair find-file-in-repository flycheck))
-
-(mapc 'install-if-needed to-install)
-
+(unless (prelude-packages-installed-p)
+  (message "%s" "Emacs is now refreshing its package database...")
+  (package-refresh-contents)
+  (message "%s" " done.")
+  (dolist (package prelude-packages)
+    (unless (package-installed-p package)
+      (package-install package)))
+  )
 
 ;; Ask for confirmation before quitting Emacs
 (add-hook 'kill-emacs-query-functions
@@ -46,6 +52,9 @@
 (prefer-coding-system 'utf-8-unix)
 (set-default default-buffer-file-coding-system 'utf-8-unix)
 (set-language-environment 'German)
+
+;; have vlf offered as choice when opening large files
+(require 'vlf-setup)
 
 ;; Fuzzy check indent format (tabs or spaces) of current buffer. and set indent-tabs-mode and format code automatically.
 (require 'fuzzy-format)
@@ -266,14 +275,17 @@ by using nxml's indentation rules."
   (load "~/.emacs_custom"))
 
 (custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- '(global-font-lock-mode t nil (font-lock)))
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(global-font-lock-mode t nil (font-lock))
+ '(package-selected-packages
+   (quote
+    (yasnippet python-mode magit json-mode jedi fuzzy-format flycheck find-file-in-repository autopair))))
 (custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  )
