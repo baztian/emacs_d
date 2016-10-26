@@ -1,6 +1,6 @@
-
 (server-start)
 
+(require 'cl)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;Library Paths
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -24,13 +24,16 @@
 (setq url-http-attempt-keepalives nil)
 
 (defvar prelude-packages
-  '(magit yasnippet auto-complete autopair find-file-in-repository flycheck fuzzy-format vlf)
+  '(yasnippet auto-complete autopair find-file-in-repository flycheck
+	      fuzzy-format vlf)
   "A list of packages to ensure are installed at launch.")
+(if (not (version< emacs-version "24.4"))
+    (add-to-list 'prelude-packages 'magit))
 
 (defun prelude-packages-installed-p ()
-  (cl-loop for p in prelude-packages
-	   when (not (package-installed-p p)) do (cl-return nil)
-	   finally (cl-return t)))
+  (loop for p in prelude-packages
+	   when (not (package-installed-p p)) do (return nil)
+	   finally (return t)))
 
 (unless (prelude-packages-installed-p)
   (message "%s" "Emacs is now refreshing its package database...")
@@ -142,8 +145,10 @@
 (defvar bzr-executable "bzr")
 (load-file "~/.emacs.d/dvc/dvc-load.el")
 
-(require 'magit)
-(global-set-key "\C-xg" 'magit-status)
+(if (package-installed-p 'magit)
+  (progn
+    (require 'magit)
+    (global-set-key "\C-xg" 'magit-status)))
 
 (require 'autopair)
 (require 'flycheck)

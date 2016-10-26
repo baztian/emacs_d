@@ -1,10 +1,10 @@
 ;;; auto-complete-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-(add-to-list 'load-path (directory-file-name (or (file-name-directory #$) (car load-path))))
+
 
-;;;### (autoloads nil "auto-complete" "auto-complete.el" (22544 53559
-;;;;;;  704334 200000))
+;;;### (autoloads (global-auto-complete-mode auto-complete-mode auto-complete)
+;;;;;;  "auto-complete" "auto-complete.el" (22545 1197 12653 438000))
 ;;; Generated autoloads from auto-complete.el
 
 (autoload 'auto-complete "auto-complete" "\
@@ -18,9 +18,8 @@ AutoComplete mode
 \(fn &optional ARG)" t nil)
 
 (defvar global-auto-complete-mode nil "\
-Non-nil if Global Auto-Complete mode is enabled.
-See the `global-auto-complete-mode' command
-for a description of this minor mode.
+Non-nil if Global-Auto-Complete mode is enabled.
+See the command `global-auto-complete-mode' for a description of this minor mode.
 Setting this variable directly does not take effect;
 either customize it (see the info node `Easy Customization')
 or call the function `global-auto-complete-mode'.")
@@ -29,7 +28,7 @@ or call the function `global-auto-complete-mode'.")
 
 (autoload 'global-auto-complete-mode "auto-complete" "\
 Toggle Auto-Complete mode in all buffers.
-With prefix ARG, enable Global Auto-Complete mode if ARG is positive;
+With prefix ARG, enable Global-Auto-Complete mode if ARG is positive;
 otherwise, disable it.  If called from Lisp, enable the mode if
 ARG is omitted or nil.
 
@@ -41,8 +40,8 @@ See `auto-complete-mode' for more information on Auto-Complete mode.
 
 ;;;***
 
-;;;### (autoloads nil "auto-complete-config" "auto-complete-config.el"
-;;;;;;  (22544 53560 454355 300000))
+;;;### (autoloads (ac-config-default) "auto-complete-config" "auto-complete-config.el"
+;;;;;;  (22545 1197 288653 445000))
 ;;; Generated autoloads from auto-complete-config.el
 
 (autoload 'ac-config-default "auto-complete-config" "\
@@ -52,14 +51,16 @@ See `auto-complete-mode' for more information on Auto-Complete mode.
 
 ;;;***
 
-;;;### (autoloads nil nil ("auto-complete-pkg.el") (22544 53559 673083
-;;;;;;  500000))
+;;;### (autoloads nil nil ("auto-complete-pkg.el") (22545 1197 301863
+;;;;;;  410000))
 
 ;;;***
 
+(provide 'auto-complete-autoloads)
 ;; Local Variables:
 ;; version-control: never
 ;; no-byte-compile: t
 ;; no-update-autoloads: t
+;; coding: utf-8
 ;; End:
 ;;; auto-complete-autoloads.el ends here

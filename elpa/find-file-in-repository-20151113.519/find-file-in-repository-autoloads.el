@@ -1,10 +1,10 @@
 ;;; find-file-in-repository-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-(add-to-list 'load-path (directory-file-name (or (file-name-directory #$) (car load-path))))
+
 
-;;;### (autoloads nil "find-file-in-repository" "find-file-in-repository.el"
-;;;;;;  (22544 53563 751328 700000))
+;;;### (autoloads (find-file-in-repository) "find-file-in-repository"
+;;;;;;  "find-file-in-repository.el" (22545 1198 388653 473000))
 ;;; Generated autoloads from find-file-in-repository.el
 
 (autoload 'find-file-in-repository "find-file-in-repository" "\
@@ -24,9 +24,16 @@ find-file-in-repository will autocomplete all files in the
 
 ;;;***
 
+;;;### (autoloads nil nil ("find-file-in-repository-pkg.el") (22545
+;;;;;;  1198 413017 297000))
+
+;;;***
+
+(provide 'find-file-in-repository-autoloads)
 ;; Local Variables:
 ;; version-control: never
 ;; no-byte-compile: t
 ;; no-update-autoloads: t
+;; coding: utf-8
 ;; End:
 ;;; find-file-in-repository-autoloads.el ends here
