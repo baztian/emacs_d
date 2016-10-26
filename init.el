@@ -145,7 +145,7 @@
 (defvar bzr-executable "bzr")
 (load-file "~/.emacs.d/dvc/dvc-load.el")
 
-(if (package-installed-p 'magit)
+(if (not (version< emacs-version "24.4"))
   (progn
     (require 'magit)
     (global-set-key "\C-xg" 'magit-status)))
