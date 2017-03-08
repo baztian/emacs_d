@@ -25,7 +25,7 @@
 
 (defvar prelude-packages
   '(yasnippet auto-complete autopair find-file-in-repository flycheck
-	      fuzzy-format vlf)
+	      fuzzy-format vlf material-theme)
   "A list of packages to ensure are installed at launch.")
 (if (not (version< emacs-version "24.4"))
     (add-to-list 'prelude-packages 'magit))
@@ -55,6 +55,8 @@
 (prefer-coding-system 'utf-8-unix)
 (set-default default-buffer-file-coding-system 'utf-8-unix)
 (set-language-environment 'German)
+
+(load-theme 'material-light t)
 
 ;; have vlf offered as choice when opening large files
 (require 'vlf-setup)
@@ -260,6 +262,9 @@ by using nxml's indentation rules."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("5dc0ae2d193460de979a463b907b4b2c6d2c9c4657b2e9e66b8898d2592e3de5" default)))
  '(global-font-lock-mode t nil (font-lock))
  '(package-selected-packages
    (quote
