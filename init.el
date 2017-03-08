@@ -24,8 +24,8 @@
 (setq url-http-attempt-keepalives nil)
 
 (defvar prelude-packages
-  '(yasnippet auto-complete autopair find-file-in-repository flycheck
-	      fuzzy-format vlf material-theme)
+  '(yasnippet auto-complete autopair elpy find-file-in-repository
+              flycheck fuzzy-format material-theme vlf)
   "A list of packages to ensure are installed at launch.")
 (if (not (version< emacs-version "24.4"))
     (add-to-list 'prelude-packages 'magit))
@@ -146,7 +146,20 @@
 (setq-default ac-sources (push 'ac-source-yasnippet ac-sources))
 
 ;; ;; Python mode settings
-(autoload 'python-mode "my-python-setup" "Python editing mode." t)
+;; (autoload 'python-mode "my-python-setup" "Python editing mode." t)
+
+;; TODO use my-python-setup for elpy
+(setenv "PYTHONPATH" (concat (expand-file-name "~/.emacs.d/Pymacs")
+                             path-separator
+                             (expand-file-name "~/.emacs.d/python-jedi")
+                             path-separator
+                             (expand-file-name "~/.emacs.d/python-pylint")
+                             path-separator
+                             (expand-file-name "~/.emacs.d/python-epc")
+                             path-separator
+                             (expand-file-name "~/.emacs.d/python-pep8")))
+
+(elpy-enable)
 
 (require 'elemental)
 (global-set-key (kbd "C-(") 'elem/backward-one)
