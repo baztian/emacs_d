@@ -61,6 +61,10 @@
 ;; have vlf offered as choice when opening large files
 (require 'vlf-setup)
 
+;; https://github.com/yoshiki/yaml-mode
+(require 'yaml-mode)
+(add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
+
 ;; Fuzzy check indent format (tabs or spaces) of current buffer. and set indent-tabs-mode and format code automatically.
 (require 'fuzzy-format)
 (setq fuzzy-format-default-indent-tabs-mode nil)
