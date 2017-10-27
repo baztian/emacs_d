@@ -50,11 +50,11 @@
           'append)
 
 ;; Sets coding system priority and default input method
+(prefer-coding-system 'utf-8-unix)
 (set-default buffer-file-coding-system 'utf-8-unix)
 (set-default-coding-systems 'utf-8-unix)
-(prefer-coding-system 'utf-8-unix)
 (set-default default-buffer-file-coding-system 'utf-8-unix)
-(set-language-environment 'German)
+(set-language-environment 'utf-8)
 
 (load-theme 'material-light t)
 
