@@ -270,6 +270,11 @@ by using nxml's indentation rules."
 ;F1: goto-line
 (define-key global-map [f1] 'goto-line)
 
+; Zoom in out with Ctrl + scroll wheel
+; https://stackoverflow.com/questions/5533110/emacs-zoom-in-zoom-out
+(global-set-key [C-mouse-4] 'text-scale-increase)
+(global-set-key [C-mouse-5] 'text-scale-decrease)
+
 ;; Load custom stuff
 (when (file-exists-p "~/.emacs_custom.el")
   (load "~/.emacs_custom"))
